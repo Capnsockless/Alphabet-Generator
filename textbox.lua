@@ -2,8 +2,9 @@ TextBox = {
     x = 0,
     y = 0,
     width = 256,
-    height = 64,
+    height = 32,
     borderwidth = 5,
+    title = '',
     text = '',
     active = false,
     colors = {
@@ -14,10 +15,11 @@ TextBox = {
     }
 }
 
-function TextBox:init(x, y)
+function TextBox:init(name, x, y)
     local o = {}
     setmetatable(o, self)
     self.__index = self
+    o.title = name
     o.x = x
     o.y = y
     return o
@@ -59,9 +61,14 @@ function TextBox:draw_self()
         self.x, self.y,
         self.width, self.height)
 
-    -- Drawing text
+    -- Drawing title
     love.graphics.setColor(unpack(self.colors.text))
+    love.graphics.printf(self.title,
+        self.x, self.y-4*self.borderwidth,
+        self.width, 'left', 0, 1, 1)
+
+    -- Drawing input
     love.graphics.printf(self.text,
-        self.x, self.y,
-        self.width, 'left')    
+        self.x, self.y+self.height/5,
+        self.width, 'left', 0, 1, 1)
 end

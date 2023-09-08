@@ -9,31 +9,57 @@ backgroundColor = {0.9, 0.9, 0.9, 1}
 currActive = -1 -- -1 means no value
 
 --- Alphabet Parameters
-amount = 33
-complexity = 5
-roughness = 10
+unordered_Parameters = {
+    seed = { name = 'Random seed', value = 322}, -- Random seed
 
+    amount = { name = 'Amount of letters', value = 33},
+    maxstrokes = { name = 'Maximum amount of strokes', value = 5},
+    roughness = { name = 'Roughness', value = 10},
+    minwidth = { name = 'Minimum width', value = 2},
+    maxwidth = { name = 'Maximum width', value = 4},
+    minheight = { name = 'Minimum height', value = 1},
+    maxheight = { name = 'Maximum height', value = 5}
+}
 
-function love.load()    
+local Parameters = {}
+
+-- Used for sorting the table
+for k in pairs(unordered_Parameters) do
+    table.insert(Parameters, k)
+end
+
+nboxes = 0
+
+for k, v in pairs(Parameters) do 
+   nboxes = nboxes + 1
+end
+
+textBoxArray = {}
+function love.load()
     -- Set up the game window
     love.window.setMode(windowWidth, windowHeight)
     love.graphics.setBackgroundColor(backgroundColor)
-    love.window.setTitle("Alphabet Generator")
+    love.window.setTitle('Alphabet Generator')
 
+    -- Two columns
+    local nrows = nboxes / 2
     local secondPosX = TextBox.width + (windowWidth - 80 - 2*TextBox.width) -- starts on 40
-    local secondPosY = TextBox.height + (windowHeight - 80 - 2*TextBox.height)
+    local addPosY = (windowHeight - 70)/(nrows-1)
 
-    textBoxArray = {}
-    for i=1,4 do
-        local xx = 0
-        local yy = 0
+    local i = 1
+    local yy = 30
+
+    table.sort(Parameters)
+    for i = 1, #Parameters do
+        local k, v = Parameters[i], unordered_Parameters[Parameters[i]]
+        local xx = 40
         if (i%2 == 1) then
             xx = secondPosX
         end
-        if (i > 2) then
-            yy = secondPosY
+        textBoxArray[i] = TextBox:init(v.name, xx, yy)
+        if (i%2 == 0) then
+            yy = yy + addPosY
         end
-        textBoxArray[i] = TextBox:init(40+xx, 40+yy)
     end
 end
 
@@ -42,14 +68,14 @@ function love.update(dt)
 end
 
 function love.draw()
-    for i=1,4 do
+    for i=1,nboxes,1 do
         textBoxArray[i]:draw_self()
     end    
 end
 
 function love.mousepressed(x, y)
     local found = false
-    for i=1,4 do
+    for i=1,nboxes do
         local itis = textBoxArray[i]:check_click(x, y)
         if itis then found = true currActive = i end
     end
