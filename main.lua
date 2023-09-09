@@ -1,4 +1,5 @@
 require 'textbox'
+local json = require 'json'
 
 -- Globals
 windowWidth = 1024
@@ -9,28 +10,16 @@ backgroundColor = {0.9, 0.9, 0.9, 1}
 currActive = -1 -- -1 means no value
 
 --- Alphabet Parameters
-unordered_Parameters = {
-    seed = { name = 'Random seed', value = 322}, -- Random seed
+local file = io.open('parameters.json', 'r')
+local content = file:read('a')
 
-    amount = { name = 'Amount of letters', value = 33},
-    maxstrokes = { name = 'Maximum amount of strokes', value = 5},
-    roughness = { name = 'Roughness', value = 10},
-    minwidth = { name = 'Minimum width', value = 2},
-    maxwidth = { name = 'Maximum width', value = 4},
-    minheight = { name = 'Minimum height', value = 1},
-    maxheight = { name = 'Maximum height', value = 5}
-}
+local Parameters = json.decode(content)
+print(Parameters[1].name)
 
-local Parameters = {}
-
--- Used for sorting the table
-for k in pairs(unordered_Parameters) do
-    table.insert(Parameters, k)
-end
 
 nboxes = 0
 
-for k, v in pairs(Parameters) do 
+for i=1, #Parameters do 
    nboxes = nboxes + 1
 end
 
@@ -49,14 +38,12 @@ function love.load()
     local i = 1
     local yy = 30
 
-    table.sort(Parameters)
     for i = 1, #Parameters do
-        local k, v = Parameters[i], unordered_Parameters[Parameters[i]]
         local xx = 40
-        if (i%2 == 1) then
+        if (i%2 == 0) then
             xx = secondPosX
         end
-        textBoxArray[i] = TextBox:init(v.name, xx, yy)
+        textBoxArray[i] = TextBox:init(Parameters[i].name, xx, yy)
         if (i%2 == 0) then
             yy = yy + addPosY
         end
