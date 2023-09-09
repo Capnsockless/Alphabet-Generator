@@ -1,4 +1,1 @@
-[{"name":"Random seed", "value":322}, {"name":"Amount of letters", "value":33},
-{"name":"Maximum amount of strokes", "value":5}, {"name":"Roughness", "value":10},
-{"name":"Minimum width", "value":2}, {"name":"Maximum width", "value":4},
-{"name":"Minimum height", "value":1}, {"name":"Maximum height", "value":5}]
+[{"default":322,"value":233,"name":"Random seed"},{"default":38,"value":33233,"name":"Amount of letters"},{"default":3,"value":3,"name":"Maximum amount of strokes"},{"default":10,"value":10,"name":"Roughness"},{"default":1,"value":1,"name":"Minimum width"},{"default":5,"value":5,"name":"Maximum width"},{"default":1,"value":1,"name":"Minimum height"},{"default":6,"value":6,"name":"Maximum height"}]

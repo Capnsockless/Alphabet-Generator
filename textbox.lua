@@ -42,7 +42,7 @@ function TextBox:check_click(xx, yy)
     else
         self:deactivate()
     end
-    -- Returns true to let the main program stop checking
+
     return clicked
 end
 
