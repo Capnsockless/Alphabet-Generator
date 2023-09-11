@@ -1,4 +1,0 @@
-[{"name":"Random seed", "value":322}, {"name":"Amount of letters", "value":33},
-{"name":"Maximum amount of strokes", "value":5}, {"name":"Roughness", "value":10},
-{"name":"Minimum width", "value":2}, {"name":"Maximum width", "value":4},
-{"name":"Minimum height", "value":1}, {"name":"Maximum height", "value":5}] 

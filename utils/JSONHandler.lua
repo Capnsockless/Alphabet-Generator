@@ -1,7 +1,7 @@
-local json = require 'json'
+local json = require 'utils/json'
 
 Handler = {
-	filename = 'parameters.json',
+	filename = 'utils/parameters.json',
 	params = {},
 	nboxes = 0,
 }
