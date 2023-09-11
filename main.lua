@@ -1,14 +1,13 @@
-require 'UI/textbox'
-require 'UI/button'
-require 'utils/JSONHandler'
 require 'states/start'
+require 'utils/JSONHandler'
+
 
 -- Globals
 windowWidth = 1024
 windowHeight = 620
 backgroundColor = {0.9, 0.9, 0.9, 1}
 
-
+Hander:init()
 
 function love.load()
     -- Set up the game window
@@ -18,6 +17,10 @@ function love.load()
 
     -- States (scenes)
     Start:init(windowWidth, windowHeight)
+end
+
+function love.update(dt)
+
 end
 
 function love.draw()

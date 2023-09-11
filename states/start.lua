@@ -20,7 +20,6 @@ function Start:init(w, h)
     self.height = h
 
     -- Alphabet Parameters
-    Handler:init()
     self.Parameters = Handler.params
     self.nboxes = Handler.nboxes
 
@@ -43,7 +42,6 @@ function Start:init(w, h)
             yy = yy + addPosY
         end
     end
-
     -- Creating Button
     self.button = Button:init((self.width-Button.width)/2, yy) -- yy is already appended anyway
 end
