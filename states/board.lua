@@ -1,10 +1,15 @@
 require 'UI/button'
+require 'UI/canvas'
+
 
 Board = {
 	width = 0,
     height = 0,
 
     Parameters = {},
+
+    button = {},
+    canvas = {},
 
     curr = 1 -- Index of current character being drawn
 }
@@ -20,8 +25,11 @@ function Board:init(w, h)
     local nrows = #self.Parameters/2
     local posY = 30 + (nrows*(self.height - 240))/(2*(nrows-1))
 
+    -- Creating Canvas
+    self.canvas = Canvas:init(self.width, self.height)
+
     -- Creating Button
-    self.button = Button:init((self.width-Button.width)/2, posY) -- yy is already appended anyway
+    self.button = Button:init((self.width-Button.width)/2, (self.height-Button.height)*0.94, 'Back') -- yy is already appended anyway
 end
 
 function Board:update(dt)
@@ -29,15 +37,10 @@ function Board:update(dt)
 end
 
 function Board:draw()
-
-
+    self.canvas:draw_self()
     self.button:draw_self()
 end
 
 function Board:mousepressed(x, y)
-    -- Checking button
-    local bclick = self.button:check_click(x, y)
-    if bclick then
-        
-    end
+    return self.button:check_click(x, y)
 end

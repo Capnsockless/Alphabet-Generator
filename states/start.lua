@@ -27,7 +27,7 @@ function Start:init(w, h)
     --- Two columns
     local nrows = self.nboxes/2
     local secondPosX = TextBox.width + (self.width - 80 - 2*TextBox.width) -- starts on 40
-    local addPosY = (self.height - 240)/(nrows-1)
+    local addPosY = (self.height - Button.height*4)/(nrows-1)
 
     local i = 1
     local yy = 30
@@ -43,7 +43,7 @@ function Start:init(w, h)
         end
     end
     -- Creating Button
-    self.button = Button:init((self.width-Button.width)/2, yy) -- yy is already appended anyway
+    self.button = Button:init((self.width-Button.width)/2, (self.height-Button.height)*0.94, 'Generate')
 end
 
 function Start:draw()
@@ -66,6 +66,9 @@ function Start:mousepressed(x, y)
             inputs[i] = value
         end
         Handler:save_input(inputs)
+        
+        -- Return true to let main.lua switch states
+        return true
     end
 
     -- Checking input boxes
@@ -75,6 +78,8 @@ function Start:mousepressed(x, y)
         if itis then found = true self.cur = i end
     end
     if not found then self.cur = -1 end
+
+    return false
 end
 
 function Start:textinput(t)
