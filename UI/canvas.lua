@@ -1,4 +1,6 @@
 require 'UI/button'
+require 'UI/letter/cell'
+require 'utils/JSONHandler'
 
 Canvas = {
 	x = 0,
@@ -6,6 +8,8 @@ Canvas = {
     width = 0,
     height = 0,
     borderwidth = 3,
+    cells = {},
+    params = {},
     colors = {
     	background = { 0.87, 0.85, 0.86, 1 },
     	text = { 0.05, 0.07, 0.07, 1 },
@@ -25,7 +29,29 @@ function Canvas:init(w, h)
     o.x = (w - o.width)/2
     o.y = o.x
 
+
+    o.params = Handler.params
+    love.math.setRandomSeed(o.params[1].value)
+
+    local ncells = o.params[2].value -- Gets the amount of letters requested
+    
+    -- 15x6 grid max
+    local ii = 15
+
+    local cellsize = o.width/ii
+
+    -- Placing the cells
+    for i=0,ncells do
+        o.cells[i+1] = Cell:init(o.x + (i%ii)*cellsize, o.y + math.floor(i/ii)*cellsize, cellsize)
+    end
+
     return o
+end
+
+function Canvas:update(dt)
+    for i=1, #self.cells do
+        self.cells[i]:decide()
+    end
 end
 
 function Canvas:draw_self()
@@ -40,4 +66,8 @@ function Canvas:draw_self()
     love.graphics.rectangle('fill',
         self.x, self.y,
         self.width, self.height)
+
+    for i=1, #self.cells do
+        self.cells[i]:draw_self()
+    end
 end

@@ -22,7 +22,9 @@ function love.load()
 end
 
 function love.update(dt)
-
+    if not isStart then
+        Board:update(dt)
+    end
 end
 
 function love.draw()
@@ -41,9 +43,7 @@ function love.mousepressed(x, y)
         switch = Board:mousepressed(x, y)
     end
 
-    if switch then
-        isStart = not isStart
-    end
+    if switch then switch_state() end
 end
 
 function love.textinput(t)
@@ -52,10 +52,25 @@ function love.textinput(t)
     end -- No input on the board scene anyway
 end
 
-function love.keypressed(key)
-    -- Called whenever a key is pressed
+function switch_state()
+    isStart = not isStart
 end
 
-function love.keyreleased(key)
-    -- Called whenever a key is released
+function love.keypressed(key)
+    if isStart then
+        if key == "backspace" then
+            Start:delete_char()
+        elseif key == 'return' or key == 'space' then
+            Start:generate()
+            switch_state()
+        elseif key == 'up' then
+            Start:move_cursor(-2)
+        elseif key == 'down' then
+            Start:move_cursor(2)
+        elseif key == 'left' then
+            Start:move_cursor(-1)
+        elseif key == 'right' then
+            Start:move_cursor(1)
+        end
+    end
 end

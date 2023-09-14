@@ -1,3 +1,4 @@
+require 'utils/helper'
 local json = require 'utils/json'
 
 Handler = {
@@ -20,7 +21,7 @@ end
 
 function Handler:save_input(arr)
 	for i=1, #self.params do
-		self.params[i].value = arr[i]
+		self.params[i].value = clamp(arr[i], self.params[i].min, self.params[i].max)
 	end
 
 	local encoded = json.encode(self.params)

@@ -32,8 +32,12 @@ function Board:init(w, h)
     self.button = Button:init((self.width-Button.width)/2, (self.height-Button.height)*0.94, 'Back') -- yy is already appended anyway
 end
 
-function Board:update(dt)
+function Board:reset()
+    self.canvas = Canvas:init(self.width, self.height) -- Just replace the old one, GC should handle it
+end
 
+function Board:update(dt)
+    self.canvas:update(dt)
 end
 
 function Board:draw()

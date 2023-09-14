@@ -1,6 +1,7 @@
 require 'UI/textbox'
 require 'UI/button'
 require 'utils/JSONHandler'
+local utf8 = require 'utf8'
 
 Start = {
     width = 0,
@@ -56,17 +57,7 @@ end
 function Start:mousepressed(x, y)
     -- Checking button
     local bclick = self.button:check_click(x, y)
-    if bclick then
-        local inputs = {}
-        for i=1,self.nboxes do
-            local value = tonumber(self.textBoxArray[i].text)
-            if value == nil then
-                value = self.Parameters[i].default
-            end
-            inputs[i] = value
-        end
-        Handler:save_input(inputs)
-        
+    if bclick then        
         -- Return true to let main.lua switch states
         return true
     end
@@ -82,10 +73,46 @@ function Start:mousepressed(x, y)
     return false
 end
 
+function Start:generate()
+    local inputs = {}
+    for i=1,self.nboxes do
+        local value = tonumber(self.textBoxArray[i].text)
+        if value == nil then
+            value = self.Parameters[i].default
+        end
+        inputs[i] = value
+    end
+    Handler:save_input(inputs)
+end
+
 function Start:textinput(t)
     if self.cur ~= -1 then
-        if(tonumber(t) ~= nil) then
+        -- Adds the char only if it's a digit and the string length is not over 10
+        if string.len(self.textBoxArray[self.cur].text) <= 10 and (tonumber(t) ~= nil) then
             self.textBoxArray[self.cur].text = self.textBoxArray[self.cur].text .. t
         end
     end
+end
+
+function Start:delete_char()
+    -- get the byte offset to the last UTF-8 character in the string.
+    local byteoffset = utf8.offset(self.textBoxArray[self.cur].text, -1)
+
+    if byteoffset then
+        -- remove the last UTF-8 character.
+        -- string.sub operates on bytes rather than UTF-8 characters, so we couldn't do string.sub(text, 1, -2).
+        self.textBoxArray[self.cur].text = string.sub(self.textBoxArray[self.cur].text, 1, byteoffset-1)
+    end
+end
+
+-- Used to move between textboxes and the button using arrow keys
+function Start:move_cursor(ch)
+    print(ch)
+    if self.cur == -1 then
+        self.cur = 1
+    else
+        self.textBoxArray[self.cur]:deactivate()
+        self.cur = clamp(self.cur + ch, 1, self.nboxes)
+    end
+    self.textBoxArray[self.cur]:activate()
 end
