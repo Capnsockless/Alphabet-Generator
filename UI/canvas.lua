@@ -12,9 +12,8 @@ Canvas = {
     handler = {},
     params = {},
     colors = {
-    	background = { 0.87, 0.85, 0.86, 1 },
-    	text = { 0.05, 0.07, 0.07, 1 },
-    	border = { 0.2, 0.2, 0.5, 1 },
+    	background = { 0.86, 0.9, 0.9, 0.8 },
+        border = { 0.6, 0.45, 0.87, 1 }
     }
 }
 

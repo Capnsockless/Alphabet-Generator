@@ -1,11 +1,12 @@
 require 'states/start'
 require 'states/board'
 require 'utils/JSONHandler'
+require 'love'
 
 -- Globals
 windowWidth = 1024
 windowHeight = 620
-backgroundColor = {0.9, 0.9, 0.9, 1}
+backgroundColor = {0.84, 0.84, 0.9, 1}
 isStart = true
 
 handler = {}
@@ -15,7 +16,6 @@ function love.load()
     -- Set up the game window
     love.window.setMode(windowWidth, windowHeight)
     love.graphics.setBackgroundColor(backgroundColor)
-    love.window.setTitle('Alphabet Generator')
 
     -- States (scenes)
     handler = Handler:init() -- Ensures every single instance uses the same handler so stay synced
@@ -75,6 +75,15 @@ function love.keypressed(key)
             Start:move_cursor(-1)
         elseif key == 'right' then
             Start:move_cursor(1)
+        end
+    else
+        if key == 'return' or key == 'space' then
+            local switch = Board:action()
+            if switch then switch_state() end
+        elseif key == 'left' then
+            Board:move_cursor(-1)
+        elseif key == 'right' then
+            Board:move_cursor(1)
         end
     end
 end

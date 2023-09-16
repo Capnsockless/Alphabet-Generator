@@ -65,16 +65,11 @@ end
 
 function Cell:draw_self()
 	-- Drawing the border
-    love.graphics.setColor(0.2, 0.1, 0, 1)
-    love.graphics.rectangle('fill',
-        self.x-1, self.y-1,
-        self.size+2, self.size+2)
-
-    -- Draw the "flesh" of the box
-    love.graphics.setColor(0.7, 0.7, 0.5, 1)
-    love.graphics.rectangle('fill',
+    love.graphics.setColor(0.4, 0.22, 0.69, 1)
+    love.graphics.rectangle('line',
         self.x, self.y,
         self.size, self.size)
+
 
 	for i=1, #self.points do
 		self.points[i]:draw_self()

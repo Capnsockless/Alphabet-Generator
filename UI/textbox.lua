@@ -10,10 +10,10 @@ TextBox = {
     text = '',
     active = false,
     colors = {
-        background = { 0.76, 0.85, 0.75, 0.8 },
-        text = { 0.05, 0.07, 0.07, 1 },
-        border = { 0.2, 0.2, 0.5, 1 },
-        activeborder = { 0.8, 0.8, 0.2, 0.96 }
+        background = { 0.86, 0.9, 0.9, 0.8 },
+        text = { 0, 0, 0, 1 },
+        border = { 0.42, 0.37, 0.68, 1 },
+        activeborder = { 0.97, 0.9, 0.13, 1 }
     }
 }
 
@@ -73,6 +73,6 @@ function TextBox:draw_self()
 
     -- Drawing input
     love.graphics.printf(self.text,
-        self.x, self.y+self.height/5,
+        self.x+5, self.y+self.height/5,
         self.width, 'left', 0, 1, 1)
 end

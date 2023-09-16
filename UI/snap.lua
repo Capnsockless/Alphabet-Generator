@@ -1,13 +1,14 @@
 require 'utils/helper'
 
-Button = {
+-- Another button but it takes screenshots, pretty unnecessary but I got lazy to do it properly(making it another type of Button)
+Snap = {
 	x = 0,
 	y = 0,
     width = 180,
     height = 64,
     borderwidth = 5,
-	text = '',
-    active = false,
+	text = 'Take screenshot',
+	active = false,
     colors = {
         background = { 0.86, 0.9, 0.9, 0.8 },
         text = { 0, 0, 0, 1 },
@@ -16,23 +17,21 @@ Button = {
     }
 }
 
-function Button:init(x, y, t)
+function Snap:init(x, y)
     local o = {}
     setmetatable(o, self)
     self.__index = self
-    
     o.x = x
     o.y = y
-    o.text = t
 
     return o
 end
 
-function Button:check_click(xx, yy)
+function Snap:check_click(xx, yy)
     return between(xx, yy, self.x, self.y, self.x+self.width, self.y+self.height)
 end    
 
-function Button:draw_self()
+function Snap:draw_self()
     -- Drawing the border
     local current = self.colors.border
     if self.active then current = self.colors.activeborder end
