@@ -1,3 +1,5 @@
+require 'utils/helper'
+
 Button = {
 	x = 0,
 	y = 0,
@@ -26,7 +28,7 @@ function Button:init(x, y, t)
 end
 
 function Button:check_click(xx, yy)
-    return (xx >= self.x and xx <= self.x+self.width and yy >= self.y and yy <= self.y+self.height)
+    return between(xx, yy, self.x, self.y, self.x+self.width, self.y+self.height)
 end    
 
 function Button:draw_self()

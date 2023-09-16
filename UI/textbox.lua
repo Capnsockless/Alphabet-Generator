@@ -1,3 +1,5 @@
+require 'utils/helper'
+
 TextBox = {
     x = 0,
     y = 0,
@@ -15,11 +17,13 @@ TextBox = {
     }
 }
 
-function TextBox:init(name, x, y)
+function TextBox:init(name, x, y, text)
     local o = {}
     setmetatable(o, self)
     self.__index = self
     o.title = name
+    o.text = text
+
     o.x = x
     o.y = y
     return o
@@ -36,7 +40,7 @@ end
 -- Checks whether a click was in place or not, activates if it was
 function TextBox:check_click(xx, yy)
     local clicked = false
-    if (xx >= self.x and xx <= self.x+self.width and yy >= self.y and yy <= self.y+self.height) then
+    if between(xx, yy, self.x, self.y, self.x+self.width, self.y+self.height) then
         clicked = true
         self:activate()
     else

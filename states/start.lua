@@ -10,19 +10,21 @@ Start = {
     textBoxArray = {},
     button = {},
 
+    handler = {},
     Parameters = {},
     nboxes = 0,
 
     cur = -1, -- Cursor, -1 means no value
 }
 
-function Start:init(w, h)
+function Start:init(handler, w, h)
     self.width = w
     self.height = h
 
     -- Alphabet Parameters
-    self.Parameters = Handler.params
-    self.nboxes = Handler.nboxes
+    self.handler = handler
+    self.Parameters = handler.params
+    self.nboxes = handler.nboxes
 
     -- Creating the input textboxes
     --- Two columns
@@ -38,7 +40,7 @@ function Start:init(w, h)
         if (i%2 == 0) then
             xx = secondPosX
         end
-        self.textBoxArray[i] = TextBox:init(self.Parameters[i].name, xx, yy)
+        self.textBoxArray[i] = TextBox:init(self.Parameters[i].name, xx, yy, tostring(self.Parameters[i].value))
         if (i%2 == 0) then
             yy = yy + addPosY
         end
@@ -57,7 +59,8 @@ end
 function Start:mousepressed(x, y)
     -- Checking button
     local bclick = self.button:check_click(x, y)
-    if bclick then        
+    if bclick then
+        Start:generate() 
         -- Return true to let main.lua switch states
         return true
     end
@@ -82,7 +85,7 @@ function Start:generate()
         end
         inputs[i] = value
     end
-    Handler:save_input(inputs)
+    self.handler:save_input(inputs)
 end
 
 function Start:textinput(t)
@@ -107,7 +110,6 @@ end
 
 -- Used to move between textboxes and the button using arrow keys
 function Start:move_cursor(ch)
-    print(ch)
     if self.cur == -1 then
         self.cur = 1
     else

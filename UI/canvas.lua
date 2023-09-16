@@ -9,6 +9,7 @@ Canvas = {
     height = 0,
     borderwidth = 3,
     cells = {},
+    handler = {},
     params = {},
     colors = {
     	background = { 0.87, 0.85, 0.86, 1 },
@@ -18,7 +19,7 @@ Canvas = {
 }
 
 -- Doesn't take in x and y, takes width and height of the window and fills most of it
-function Canvas:init(w, h)
+function Canvas:init(handler, w, h)
     local o = {}
     setmetatable(o, self)
     self.__index = self
@@ -29,11 +30,11 @@ function Canvas:init(w, h)
     o.x = (w - o.width)/2
     o.y = o.x
 
+    o.handler = handler
+    o.params = handler.params
+    love.math.setRandomSeed(handler:get_value("seed"))
 
-    o.params = Handler.params
-    love.math.setRandomSeed(o.params[1].value)
-
-    local ncells = o.params[2].value -- Gets the amount of letters requested
+    local ncells = handler:get_value("amount") -- Gets the amount of letters requested
     
     -- 15x6 grid max
     local ii = 15
@@ -46,6 +47,25 @@ function Canvas:init(w, h)
     end
 
     return o
+end
+
+function Canvas:reset()
+    self.params = handler.params
+    love.math.setRandomSeed(self.handler:get_value("seed"))
+
+    local ncells = self.handler:get_value("amount") -- Gets the amount of letters requested
+    
+    -- 15x6 grid max
+    local ii = 15
+
+    local cellsize = self.width/ii
+
+    -- Placing the cells
+    self.cells = {}
+
+    for i=0,ncells do
+        self.cells[i+1] = Cell:init(self.x + (i%ii)*cellsize, self.y + math.floor(i/ii)*cellsize, cellsize)
+    end
 end
 
 function Canvas:update(dt)

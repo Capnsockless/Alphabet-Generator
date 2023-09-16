@@ -6,6 +6,7 @@ Board = {
 	width = 0,
     height = 0,
 
+    handler = {},
     Parameters = {},
 
     button = {},
@@ -14,11 +15,12 @@ Board = {
     curr = 1 -- Index of current character being drawn
 }
 
-function Board:init(w, h)
+function Board:init(handler, w, h)
     self.width = w
     self.height = h
 
-    self.Parameters = Handler.params
+    self.handler = handler
+    self.Parameters = handler.params
 
     -- Creating the input textboxes
     --- Two columns
@@ -26,14 +28,14 @@ function Board:init(w, h)
     local posY = 30 + (nrows*(self.height - 240))/(2*(nrows-1))
 
     -- Creating Canvas
-    self.canvas = Canvas:init(self.width, self.height)
+    self.canvas = Canvas:init(handler, self.width, self.height)
 
     -- Creating Button
     self.button = Button:init((self.width-Button.width)/2, (self.height-Button.height)*0.94, 'Back') -- yy is already appended anyway
 end
 
 function Board:reset()
-    self.canvas = Canvas:init(self.width, self.height) -- Just replace the old one, GC should handle it
+    self.canvas:reset()
 end
 
 function Board:update(dt)

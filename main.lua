@@ -8,7 +8,8 @@ windowHeight = 620
 backgroundColor = {0.9, 0.9, 0.9, 1}
 isStart = true
 
-Handler:init()
+handler = {}
+
 
 function love.load()
     -- Set up the game window
@@ -17,8 +18,10 @@ function love.load()
     love.window.setTitle('Alphabet Generator')
 
     -- States (scenes)
-    Start:init(windowWidth, windowHeight)
-    Board:init(windowWidth, windowHeight)
+    handler = Handler:init() -- Ensures every single instance uses the same handler so stay synced
+
+    Start:init(handler, windowWidth, windowHeight)
+    Board:init(handler, windowWidth, windowHeight)
 end
 
 function love.update(dt)
@@ -54,6 +57,7 @@ end
 
 function switch_state()
     isStart = not isStart
+    Board:reset()
 end
 
 function love.keypressed(key)
