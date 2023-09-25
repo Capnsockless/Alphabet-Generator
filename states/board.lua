@@ -59,7 +59,7 @@ function Board:mousepressed(x, y)
 
     -- Saves screenshot to %appdata%/LOVE
     if self.snap:check_click(x, y) then
-        screenshot()
+        self:screenshot()
     end
 
     return false -- Tells main.lua to not switch states

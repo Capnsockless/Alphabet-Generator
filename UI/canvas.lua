@@ -1,6 +1,5 @@
 require 'UI/button'
 require 'UI/letter/cell'
-require 'utils/JSONHandler'
 
 Canvas = {
 	x = 0,
@@ -34,7 +33,7 @@ function Canvas:init(handler, w, h)
     love.math.setRandomSeed(handler:get_value("seed"))
 
     local ncells = handler:get_value("amount") -- Gets the amount of letters requested
-    
+
     -- 15x6 grid max
     local ii = 15
 
@@ -42,14 +41,15 @@ function Canvas:init(handler, w, h)
 
     -- Placing the cells
     for i=0,ncells do
-        o.cells[i+1] = Cell:init(o.x + (i%ii)*cellsize, o.y + math.floor(i/ii)*cellsize, cellsize)
+        o.cells[i+1] = Cell:init(handler, o.x + (i%ii)*cellsize, o.y + math.floor(i/ii)*cellsize, cellsize)
     end
 
+    print("Created canvas")
     return o
 end
 
 function Canvas:reset()
-    self.params = handler.params
+    self.params = self.handler.params
     love.math.setRandomSeed(self.handler:get_value("seed"))
 
     local ncells = self.handler:get_value("amount") -- Gets the amount of letters requested
@@ -62,8 +62,8 @@ function Canvas:reset()
     -- Placing the cells
     self.cells = {}
 
-    for i=0,ncells do
-        self.cells[i+1] = Cell:init(self.x + (i%ii)*cellsize, self.y + math.floor(i/ii)*cellsize, cellsize)
+    for i=0,ncells-1 do
+        self.cells[i+1] = Cell:init(self.handler, self.x + (i%ii)*cellsize, self.y + math.floor(i/ii)*cellsize, cellsize)
     end
 end
 

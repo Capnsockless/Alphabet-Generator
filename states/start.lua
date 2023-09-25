@@ -1,6 +1,5 @@
 require 'UI/textbox'
 require 'UI/button'
-require 'utils/JSONHandler'
 local utf8 = require 'utf8'
 
 Start = {

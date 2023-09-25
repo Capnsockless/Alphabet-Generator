@@ -8,7 +8,7 @@ Handler = {
 
 	-- ORDER MATTERS Used for get_value() to get values with the basic names
 	name_int = {
-		"seed", "amount", "strokes", "length", "roughness", "complexity", "maxwidth", "maxheight"
+		"seed", "amount", "strokes", "length", "roughness", "dirchanges", "maxwidth", "maxheight"
 	}
 }
 
@@ -55,5 +55,25 @@ function Handler:get_value(namestr)
 		return -1
 	else
 		return self.params[ind].value
+	end
+end
+
+-- Gets the min/max of requested parameter by name as string
+function Handler:get_limit(namestr, getmax)
+	local ind = 0
+	for i=1,#self.name_int,1 do
+		if self.name_int[i] == namestr then
+			ind = i
+			break
+		end
+	end
+	if ind == 0 then
+		return -1
+	else
+		if getmax then
+			return self.params[ind].max
+		end
+
+		return self.params[ind].min
 	end
 end

@@ -18,6 +18,5 @@ function Point:init(x, y, r)
 end
 
 function Point:draw_self()
-	love.graphics.setColor(0, 0, 0, 1)
 	love.graphics.circle('fill', self.x, self.y, self.r, 7)
 end
