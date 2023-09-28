@@ -39,7 +39,8 @@ function Start:init(handler, w, h)
         if (i%2 == 0) then
             xx = secondPosX
         end
-        self.textBoxArray[i] = TextBox:init(self.Parameters[i].name, xx, yy, tostring(self.Parameters[i].value))
+        self.textBoxArray[i] = TextBox:init(self.Parameters[i].name, xx, yy,
+            tostring(self.Parameters[i].value), tostring(self.Parameters[i].min), tostring(self.Parameters[i].max))
         if (i%2 == 0) then
             yy = yy + addPosY
         end

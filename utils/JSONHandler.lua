@@ -8,7 +8,7 @@ Handler = {
 
 	-- ORDER MATTERS Used for get_value() to get values with the basic names
 	name_int = {
-		"seed", "amount", "strokes", "length", "roughness", "dirchanges", "maxwidth", "maxheight"
+		"seed", "amount", "strokes", "length", "roughness", "dirchanges"
 	}
 }
 

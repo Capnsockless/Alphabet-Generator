@@ -14,8 +14,6 @@ Cell = {
 	maxroughness = 0, -- Not one of the input values
 	strokes = 0, -- Amount of individual strokes, decrements till 0
 	dirchanges = 0, -- Amount of times the directon of the pen changes, decrements till 0
-	maxwidth = 0,
-	maxheight = 0,
 
 	cframes = 0, -- Amount of circles drawn, increases
 	cr = 0, -- Current size of circle (intensity of pen press)
@@ -40,8 +38,6 @@ function Cell:init(handler, x, y, s)
 	o.maxroughness = handler:get_limit('roughness', true)
 	o.strokes = love.math.random(1, handler:get_value('strokes'))
 	o.dirchanges = love.math.random(1, handler:get_value('dirchanges'))
-	o.maxwidth = love.math.random(1, handler:get_value('maxwidth'))
-	o.maxheight = love.math.random(1, handler:get_value('maxheight'))
 	o.points = {}
 
 	o:reset_pen()
@@ -72,7 +68,6 @@ function Cell:reset_pen()
 		local point = self.points[randPoint]
 		self.xpos = point.x
 		self.ypos = point.y
-		print("crossed")
 	end
 end
 
@@ -82,7 +77,6 @@ function Cell:change_dir()
 
 	local rough = math.floor(rand_near(self.roughness, self.maxroughness/4)+0.5) -- The +0.5 makes it .round() not .floor()
 	self.direction = (self.direction + rough*math.pi/6)%(2*math.pi)
-	print("Changed direction")
 end
 
 -- This is where the magic randomness happens
@@ -102,8 +96,6 @@ function Cell:decide()
 	if not almost_equal(self.angle, self.direction, 0.005) then
 		self.angle = self.angle + (self.direction - self.angle)/self.roughness
 	end
-
-	print(self.angle.." "..self.direction)
 
 	-- Calculate the deltas
 	local dx = self.cr*math.cos(self.angle)

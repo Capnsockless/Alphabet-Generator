@@ -30,7 +30,7 @@ function Board:init(handler, w, h)
     local posY = 30 + (nrows*(self.height - 240))/(2*(nrows-1))
 
     -- Creating Canvas
-    self.canvas = Canvas:init(handler, self.width, self.height)
+    self.canvas = Canvas:init(handler, self.width)
 
     -- Creating buttons
     self.button = Button:init((self.width-Button.width)/2 + Button.width, (self.height-Button.height)*0.94, 'Back') -- yy is already appended anyway

@@ -7,6 +7,7 @@ TextBox = {
     height = 32,
     borderwidth = 5,
     title = '',
+    limits = '',
     text = '',
     active = false,
     colors = {
@@ -17,12 +18,13 @@ TextBox = {
     }
 }
 
-function TextBox:init(name, x, y, text)
+function TextBox:init(name, x, y, text, min, max)
     local o = {}
     setmetatable(o, self)
     self.__index = self
     o.title = name
     o.text = text
+    o.limits = '[' .. min .. '; ' .. max .. ']'
 
     o.x = x
     o.y = y
@@ -70,7 +72,10 @@ function TextBox:draw_self()
     love.graphics.printf(self.title,
         self.x, self.y-4*self.borderwidth,
         self.width, 'left', 0, 1, 1)
-
+    -- Drawing limits
+    love.graphics.printf(self.limits,
+        self.x, self.y+self.height+2*self.borderwidth,
+        self.width, 'left', 0, 1, 1)
     -- Drawing input
     love.graphics.printf(self.text,
         self.x+5, self.y+self.height/5,

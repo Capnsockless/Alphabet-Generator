@@ -17,13 +17,13 @@ Canvas = {
 }
 
 -- Doesn't take in x and y, takes width and height of the window and fills most of it
-function Canvas:init(handler, w, h)
+function Canvas:init(handler, w)
     local o = {}
     setmetatable(o, self)
     self.__index = self
     
     o.width = w * 0.95
-    o.height = h * 0.8
+    o.height = (o.width*7)/15
 
     o.x = (w - o.width)/2
     o.y = o.x
@@ -44,7 +44,6 @@ function Canvas:init(handler, w, h)
         o.cells[i+1] = Cell:init(handler, o.x + (i%ii)*cellsize, o.y + math.floor(i/ii)*cellsize, cellsize)
     end
 
-    print("Created canvas")
     return o
 end
 
