@@ -17,15 +17,15 @@ function Handler:init()
     setmetatable(o, self)
     self.__index = self
 
-	local file = io.open(self.filename, 'r')
-	local content = file:read('a')
+	local file = love.filesystem.newFile(self.filename, "r")
+	local content = file:read("string")
 
 	-- It's a list of "dictionaries"
 	o.params = json.decode(content)
 	for i=1, #o.params do 
 	   o.nboxes = o.nboxes + 1
 	end
-	io.close(file)
+	file:close()
 
 	return o
 end
@@ -36,10 +36,11 @@ function Handler:save_input(arr)
 	end
 
 	local encoded = json.encode(self.params)
-	local file = io.open(self.filename, 'w')
+	local file = love.filesystem.newFile(self.filename)
+	file:open("w")
 	file:write(encoded)
 
-	io.close(file)
+	file:close()
 end
 
 -- Gets the value of requested parameter by name as string

@@ -41,3 +41,11 @@ function make_cut(full, covered, n)
 
     return ndiff-ldiff < chance
 end
+
+-- Takes in [0, 999] number and generates a unique color
+function make_color(num)
+    local r = math.floor(num/100)
+    local g = math.floor((num%100)/10)
+    local b = num%10
+    return {r/10, g/10, b/10}
+end

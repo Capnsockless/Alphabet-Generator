@@ -52,7 +52,7 @@ end
 function Cell:add_point()
 	self.cframes = self.cframes + 1
 
-	self.points[self.cframes] = Point:init(self.x + self.xpos, self.y + self.ypos, self.cr)
+	self.points[self.cframes] = Point:init(self.x + self.xpos, self.y + self.ypos, self.cr, make_color(self.cframes))
 end
 
 -- Used for new strokes, like in t, i, j, f...
@@ -64,7 +64,6 @@ function Cell:reset_pen()
 	self.angle = love.math.random()*math.pi*2
 
 	local connected = love.math.random() > 0.5
-
 	if self.cframes <= 0 or connected then
 		self.xpos = love.math.random()*self.size
 		self.ypos = love.math.random()*self.size
